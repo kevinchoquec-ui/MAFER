@@ -2,93 +2,168 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Para ti 💖</title>
+<title>Para Mafer 💖</title>
 
 <style>
 body {
-    font-family: Arial;
-    text-align: center;
-    background: #ffe4ec;
-    transition: 0.5s;
+    margin: 0;
+    font-family: 'Segoe UI';
+    background: linear-gradient(135deg, #ffd6e7, #e0c3fc);
+    overflow: hidden;
 }
 
+/* 🌸 pétalos */
+.petal {
+    position: fixed;
+    top: -10px;
+    width: 15px;
+    height: 15px;
+    background: pink;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+
+/* 🌫️ fondo animado */
+body::before {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: moveBg 20s linear infinite;
+    z-index: -1;
+}
+
+@keyframes moveBg {
+    from { transform: translate(0,0); }
+    to { transform: translate(-50px,-50px); }
+}
+
+/* 💖 tarjeta */
 .container {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    width: 300px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 20px;
+    width: 320px;
     margin: auto;
-    margin-top: 50px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    margin-top: 60px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    color: #ff6fa5;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px #ffb6d9; }
+    to { text-shadow: 0 0 15px #ff6fa5; }
 }
 
 input {
     width: 90%;
-    padding: 8px;
+    padding: 10px;
     margin: 5px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+    background: #fff0f5;
 }
 
 button {
     padding: 10px;
     border: none;
-    border-radius: 10px;
-    background: pink;
+    border-radius: 15px;
+    background: linear-gradient(45deg, #ff9ecb, #caa6ff);
+    color: white;
     cursor: pointer;
 }
 
 img {
     max-width: 100%;
     margin-top: 10px;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h2>💖 Para ti 💖</h2>
+<!-- 🎵 música -->
+<audio autoplay loop>
+    <source src="https://files.catbox.moe/6m7z3p.mp3" type="audio/mpeg">
+</audio>
 
-    <p>¿Tu comida favorita?</p>
+<div class="container">
+    <h2>💖 Para Mafer 💖</h2>
+
+    <p>🍓 ¿Tu comida favorita?</p>
     <input id="comida">
 
-    <p>¿Tu color favorito?</p>
+    <p>🎨 ¿Tu color favorito?</p>
     <input id="color">
 
-    <p>¿Tu canción favorita?</p>
+    <p>🎶 ¿Tu canción favorita?</p>
     <input id="cancion">
 
     <br><br>
     <button onclick="guardar()">Guardar 💾</button>
 
-    <h3>🎨 Cambiar fondo</h3>
+    <h3>🌈 Fondo</h3>
     <input type="color" onchange="cambiarColor(this.value)">
 
-    <h3>🖼️ Subir imagen</h3>
+    <h3>🖼️ Imagen</h3>
     <input type="file" onchange="cargarImagen(event)">
     <img id="preview">
-
 </div>
 
 <script>
-function guardar() {
-    const comida = document.getElementById("comida").value
-    const color = document.getElementById("color").value
-    const cancion = document.getElementById("cancion").value
+/* 🌸 crear pétalos */
+function crearPetalo() {
+    const petalo = document.createElement("div")
+    petalo.classList.add("petal")
 
-    localStorage.setItem("comida", comida)
-    localStorage.setItem("color", color)
-    localStorage.setItem("cancion", cancion)
+    petalo.style.left = Math.random() * window.innerWidth + "px"
+    petalo.style.animationDuration = (3 + Math.random() * 5) + "s"
 
-    alert("💖 Guardado")
+    document.body.appendChild(petalo)
+
+    setTimeout(() => {
+        petalo.remove()
+    }, 8000)
 }
 
+setInterval(crearPetalo, 300)
+
+/* 💾 guardar */
+function guardar() {
+    localStorage.setItem("comida", comida.value)
+    localStorage.setItem("color", color.value)
+    localStorage.setItem("cancion", cancion.value)
+    alert("💖 Guardado Mafer")
+}
+
+/* 🎨 fondo */
 function cambiarColor(color) {
     document.body.style.background = color
 }
 
+/* 🖼️ imagen */
 function cargarImagen(event) {
     const img = document.getElementById("preview")
     img.src = URL.createObjectURL(event.target.files[0])
