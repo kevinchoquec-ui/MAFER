@@ -5,6 +5,19 @@
 <title>Para Mafer 💖</title>
 
 <style>
+    .heart {
+    position: fixed;
+    font-size: 20px;
+    animation: floatUp 1s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-80px) scale(1.5);
+        opacity: 0;
+    }
+}
 body {
     margin: 0;
     font-family: 'Segoe UI';
@@ -133,6 +146,20 @@ img {
 </div>
 
 <script>
+    document.addEventListener("click", (e) => {
+    const heart = document.createElement("div")
+    heart.classList.add("heart")
+    heart.innerHTML = "💖"
+
+    heart.style.left = e.clientX + "px"
+    heart.style.top = e.clientY + "px"
+
+    document.body.appendChild(heart)
+
+    setTimeout(() => {
+        heart.remove()
+    }, 1000)
+})
 /* 🌸 crear pétalos */
 function crearPetalo() {
     const petalo = document.createElement("div")
